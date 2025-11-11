@@ -23,6 +23,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" 
@@ -32,17 +33,27 @@
                           FontWeight="Bold"
                           VerticalAlignment="Center"/>
 
+                <!-- Фильтр по статусу -->
                 <ComboBox Grid.Column="1" 
                          x:Name="FilterComboBox"
                          Width="150" 
-                         Margin="10,0"
+                         Margin="10,0,5,0"
                          SelectionChanged="FilterComboBox_SelectionChanged">
                     <ComboBoxItem Content="Все объявления" IsSelected="True"/>
                     <ComboBoxItem Content="Активные"/>
                     <ComboBoxItem Content="Завершенные"/>
                 </ComboBox>
 
-                <Button Grid.Column="2" 
+                <!-- Фильтр по типу услуг -->
+                <ComboBox Grid.Column="2" 
+                         x:Name="TypeFilterComboBox"
+                         Width="150" 
+                         Margin="5,0,10,0"
+                         SelectionChanged="TypeFilterComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Все типы" IsSelected="True"/>
+                </ComboBox>
+
+                <Button Grid.Column="3" 
                         x:Name="AddButton"
                         Content="Добавить объявление" 
                         Click="AddButton_Click"
@@ -95,7 +106,7 @@
                                           Margin="0,5,0,0"
                                           TextWrapping="Wrap"/>
 
-                                <!-- Категория и город -->
+                                <!-- Категория, город и тип -->
                                 <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                                            Orientation="Horizontal" 
                                            Margin="0,10,0,0">
@@ -116,17 +127,26 @@
                                                   Foreground="{StaticResource DarkTextBrush}"/>
                                     </Border>
 
+                                    <Border Background="{StaticResource InfoBrush}" 
+                                            CornerRadius="3" 
+                                            Padding="5,2" 
+                                            Margin="5,0,0,0">
+                                        <TextBlock Text="{Binding Ad_Type}" 
+                                                  FontSize="10" 
+                                                  Foreground="White"/>
+                                    </Border>
+
                                     <Border Background="{Binding StatusColor}" 
                                             CornerRadius="3" 
                                             Padding="5,2" 
                                             Margin="5,0,0,0">
-                                        <TextBlock Text="{Binding Ad_status}" 
+                                        <TextBlock Text="{Binding Ad_StatusString}" 
                                                   FontSize="10" 
                                                   Foreground="White"/>
                                     </Border>
                                 </StackPanel>
 
-                                <!-- Дата и тип -->
+                                <!-- Дата и автор -->
                                 <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
                                            Orientation="Horizontal" 
                                            Margin="0,5,0,0">

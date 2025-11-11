@@ -23,6 +23,10 @@
     <Color x:Key="LightGrayColor">#FFF5F5F5</Color>
     <Color x:Key="DarkTextColor">#FF37474F</Color>
 
+    <!-- ДОБАВЛЕНО: Цвет для информационных элементов -->
+    <Color x:Key="InfoColor">#FF1976D2</Color>
+    <Color x:Key="LightInfoColor">#FFE3F2FD</Color>
+
     <!-- Основные кисти -->
     <SolidColorBrush x:Key="PrimaryTextBrush" Color="{StaticResource PrimaryTextColor}"/>
     <SolidColorBrush x:Key="SecondaryTextBrush" Color="{StaticResource SecondaryTextColor}"/>
@@ -45,6 +49,10 @@
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource AccentColor}"/>
     <SolidColorBrush x:Key="LightGrayBrush" Color="{StaticResource LightGrayColor}"/>
     <SolidColorBrush x:Key="DarkTextBrush" Color="{StaticResource DarkTextColor}"/>
+
+    <!-- ДОБАВЛЕНО: Кисти для информационных элементов -->
+    <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoColor}"/>
+    <SolidColorBrush x:Key="LightInfoBrush" Color="{StaticResource LightInfoColor}"/>
 
     <!-- Остальные стили остаются без изменений -->
     <Style TargetType="Window">

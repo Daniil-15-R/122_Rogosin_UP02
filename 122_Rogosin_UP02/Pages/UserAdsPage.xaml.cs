@@ -297,15 +297,24 @@ namespace _122_Rogosin_UP02.Pages
             {
                 using (var context = new Entities())
                 {
-                    var adToEdit = context.Ad.FirstOrDefault(a => a.ID == adId);
+                    var adToEdit = context.Ad
+                        .Include("Ad_Title1")
+                        .Include("Ad_Description1")
+                        .Include("Ad_post_date1")
+                        .Include("Ad_Type")
+                        .Include("Ad_Status")
+                        .Include("Category")
+                        .Include("City")
+                        .Include("Users_Login")
+                        .Include("Users_Password")
+                        .FirstOrDefault(a => a.ID == adId);
+
                     if (adToEdit != null)
                     {
-                        // Временное сообщение до реализации страницы редактирования
-                        ShowSuccessMessage($"Редактирование объявления ID: {adId}");
-                        // TODO: Реализовать переход на страницу редактирования
-                        // var editPage = new EditAdPage(adToEdit, _currentUserId);
-                        // editPage.AdUpdated += (s, args) => LoadUserAds();
-                        // NavigationService.Navigate(editPage);
+                        // Переход на страницу редактирования с передачей объявления
+                        var editPage = new AddAdsPage(_currentUserId, adToEdit);
+                        editPage.AdUpdated += (s, args) => LoadUserAds();
+                        NavigationService.Navigate(editPage);
                     }
                 }
             }

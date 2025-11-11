@@ -11,6 +11,7 @@ namespace _122_Rogosin_UP02.Pages
     public partial class AdsPage : Page
     {
         private List<Ad> allAds;
+        private List<Ad_Type> adTypes;
         private Entities db;
 
         public AdsPage()
@@ -21,7 +22,31 @@ namespace _122_Rogosin_UP02.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadAdTypes();
             LoadAds();
+        }
+
+        private void LoadAdTypes()
+        {
+            try
+            {
+                // Загружаем все типы объявлений
+                adTypes = db.Ad_Type.ToList();
+
+                // Заполняем комбобокс фильтра по типам
+                TypeFilterComboBox.Items.Clear();
+                TypeFilterComboBox.Items.Add(new ComboBoxItem { Content = "Все типы", IsSelected = true });
+
+                foreach (var adType in adTypes)
+                {
+                    TypeFilterComboBox.Items.Add(new ComboBoxItem { Content = adType.ad_type1 });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки типов объявлений: {ex.Message}", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void LoadAds()
@@ -32,19 +57,15 @@ namespace _122_Rogosin_UP02.Pages
                 allAds = db.Ad
                     .Include("Category")
                     .Include("City")
-                    .Include("Ad_Title1")        // Правильное имя навигационного свойства
-                    .Include("Ad_Description1")  // Правильное имя навигационного свойства
-                    .Include("Ad_Status")        // Правильное имя навигационного свойства
-                    .Include("Ad_Type")          // Правильное имя навигационного свойства
-                    .Include("Ad_post_date1")    // Правильное имя навигационного свойства
+                    .Include("Ad_Title1")
+                    .Include("Ad_Description1")
+                    .Include("Ad_Status")
+                    .Include("Ad_Type")
+                    .Include("Ad_post_date1")
                     .OrderByDescending(a => a.ad_post_date)
                     .ToList();
 
-                // Создаем список для отображения с дополнительными свойствами
-                var displayAds = allAds.Select(ad => new AdDisplayModel(ad)).ToList();
-
-                AdsItemsControl.ItemsSource = displayAds;
-                StatusText.Text = $"Загружено {displayAds.Count} объявлений";
+                ApplyFilters();
             }
             catch (Exception ex)
             {
@@ -54,29 +75,50 @@ namespace _122_Rogosin_UP02.Pages
             }
         }
 
-        private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ApplyFilters()
         {
             if (allAds == null) return;
 
-            var filter = (FilterComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             var displayAds = allAds.Select(ad => new AdDisplayModel(ad)).ToList();
 
-            switch (filter)
+            // Фильтрация по статусу
+            var statusFilter = (FilterComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            if (!string.IsNullOrEmpty(statusFilter))
             {
-                case "Активные":
-                    AdsItemsControl.ItemsSource = displayAds.Where(a =>
-                        a.Ad_StatusString.ToLower() == "активно" ||
-                        a.Ad_StatusString.ToLower() == "active");
-                    break;
-                case "Завершенные":
-                    AdsItemsControl.ItemsSource = displayAds.Where(a =>
-                        a.Ad_StatusString.ToLower() == "завершено" ||
-                        a.Ad_StatusString.ToLower() == "completed");
-                    break;
-                default:
-                    AdsItemsControl.ItemsSource = displayAds;
-                    break;
+                switch (statusFilter)
+                {
+                    case "Активные":
+                        displayAds = displayAds.Where(a =>
+                            a.Ad_StatusString.ToLower() == "активно" ||
+                            a.Ad_StatusString.ToLower() == "active").ToList();
+                        break;
+                    case "Завершенные":
+                        displayAds = displayAds.Where(a =>
+                            a.Ad_StatusString.ToLower() == "завершено" ||
+                            a.Ad_StatusString.ToLower() == "completed").ToList();
+                        break;
+                }
             }
+
+            // Фильтрация по типу услуг
+            var typeFilter = (TypeFilterComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            if (!string.IsNullOrEmpty(typeFilter) && typeFilter != "Все типы")
+            {
+                displayAds = displayAds.Where(a => a.Ad_Type == typeFilter).ToList();
+            }
+
+            AdsItemsControl.ItemsSource = displayAds;
+            StatusText.Text = $"Показано {displayAds.Count} объявлений";
+        }
+
+        private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
+        }
+
+        private void TypeFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -90,7 +132,7 @@ namespace _122_Rogosin_UP02.Pages
         {
             if (sender is FrameworkElement element && element.DataContext is AdDisplayModel ad)
             {
-                MessageBox.Show($"Выбрано объявление: {ad.Ad_Title}\n\n{ad.Ad_Description}",
+                MessageBox.Show($"Выбрано объявление: {ad.Ad_Title}\n\nТип: {ad.Ad_Type}\nЦена: {ad.Price}₽\n\n{ad.Ad_Description}",
                               "Детали объявления", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
@@ -108,9 +150,6 @@ namespace _122_Rogosin_UP02.Pages
         }
     }
 
-    // Вспомогательный класс для отображения объявлений
-    // Вспомогательный класс для отображения объявлений
-    // Вспомогательный класс для отображения объявлений
     // Вспомогательный класс для отображения объявлений
     public class AdDisplayModel
     {
