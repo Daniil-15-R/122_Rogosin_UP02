@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0d8c7fc20f1648ee9d19be3f0d9ee54b" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Ad" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Ad_Description" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Ad_post_date" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Ad_Status" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Ad_Title" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Ad_Type" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Category" Width="1.5" PointX="0.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.City" Width="1.5" PointX="0.75" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Users_Login" Width="1.5" PointX="0.75" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Users_Password" Width="1.5" PointX="0.75" PointY="22.25" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_Order_Ad_Description" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Order_Ad_post_date" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Order_Ad_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Order_Ad_Title" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Order_Ad_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Order_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Order_City" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Order_Users_Login" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_Order_Users_Password" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

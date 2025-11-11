@@ -1,0 +1,652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="user_login_id" Type="int" Nullable="false" />
+          <Property Name="user_password_id" Type="int" Nullable="false" />
+          <Property Name="ad_title" Type="int" Nullable="false" />
+          <Property Name="ad_description" Type="int" Nullable="false" />
+          <Property Name="ad_post_date" Type="int" Nullable="false" />
+          <Property Name="city_id" Type="int" Nullable="false" />
+          <Property Name="category_id" Type="int" Nullable="false" />
+          <Property Name="ad_type_id" Type="int" Nullable="false" />
+          <Property Name="ad_status_id" Type="int" Nullable="false" />
+          <Property Name="price" Type="float" />
+        </EntityType>
+        <EntityType Name="Ad_Description">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_description" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ad_post_date">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_post_date" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ad_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_status" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ad_Title">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_title" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ad_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_type" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="category" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="city" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users_Login">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="user_login" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users_Password">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="user_password" Type="nvarchar" MaxLength="255" />
+          <Property Name="ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Order_Ad_Description">
+          <End Role="Ad_Description" Type="Self.Ad_Description" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_Description">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_description" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Ad_post_date">
+          <End Role="Ad_post_date" Type="Self.Ad_post_date" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_post_date">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_post_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Ad_Status">
+          <End Role="Ad_Status" Type="Self.Ad_Status" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Ad_Title">
+          <End Role="Ad_Title" Type="Self.Ad_Title" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_Title">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_title" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Ad_Type">
+          <End Role="Ad_Type" Type="Self.Ad_Type" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="city_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Users_Login">
+          <End Role="Users_Login" Type="Self.Users_Login" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users_Login">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="user_login_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Users_Password">
+          <End Role="Users_Password" Type="Self.Users_Password" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users_Password">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="user_password_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="Ad" EntityType="Self.Ad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ad_Description" EntityType="Self.Ad_Description" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ad_post_date" EntityType="Self.Ad_post_date" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ad_Status" EntityType="Self.Ad_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ad_Title" EntityType="Self.Ad_Title" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ad_Type" EntityType="Self.Ad_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users_Login" EntityType="Self.Users_Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users_Password" EntityType="Self.Users_Password" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Order_Ad_Description" Association="Self.FK_Order_Ad_Description">
+            <End Role="Ad_Description" EntitySet="Ad_Description" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Ad_post_date" Association="Self.FK_Order_Ad_post_date">
+            <End Role="Ad_post_date" EntitySet="Ad_post_date" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Ad_Status" Association="Self.FK_Order_Ad_Status">
+            <End Role="Ad_Status" EntitySet="Ad_Status" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Ad_Title" Association="Self.FK_Order_Ad_Title">
+            <End Role="Ad_Title" EntitySet="Ad_Title" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Ad_Type" Association="Self.FK_Order_Ad_Type">
+            <End Role="Ad_Type" EntitySet="Ad_Type" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Category" Association="Self.FK_Order_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_City" Association="Self.FK_Order_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Users_Login" Association="Self.FK_Order_Users_Login">
+            <End Role="Users_Login" EntitySet="Users_Login" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Users_Password" Association="Self.FK_Order_Users_Password">
+            <End Role="Users_Password" EntitySet="Users_Password" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ad">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="user_login_id" Type="Int32" Nullable="false" />
+          <Property Name="user_password_id" Type="Int32" Nullable="false" />
+          <Property Name="ad_title" Type="Int32" Nullable="false" />
+          <Property Name="ad_description" Type="Int32" Nullable="false" />
+          <Property Name="ad_post_date" Type="Int32" Nullable="false" />
+          <Property Name="city_id" Type="Int32" Nullable="false" />
+          <Property Name="category_id" Type="Int32" Nullable="false" />
+          <Property Name="ad_type_id" Type="Int32" Nullable="false" />
+          <Property Name="ad_status_id" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Double" />
+          <NavigationProperty Name="Ad_Description1" Relationship="Self.FK_Order_Ad_Description" FromRole="Ad" ToRole="Ad_Description" />
+          <NavigationProperty Name="Ad_post_date1" Relationship="Self.FK_Order_Ad_post_date" FromRole="Ad" ToRole="Ad_post_date" />
+          <NavigationProperty Name="Ad_Status" Relationship="Self.FK_Order_Ad_Status" FromRole="Ad" ToRole="Ad_Status" />
+          <NavigationProperty Name="Ad_Title1" Relationship="Self.FK_Order_Ad_Title" FromRole="Ad" ToRole="Ad_Title" />
+          <NavigationProperty Name="Ad_Type" Relationship="Self.FK_Order_Ad_Type" FromRole="Ad" ToRole="Ad_Type" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Order_Category" FromRole="Ad" ToRole="Category" />
+          <NavigationProperty Name="City" Relationship="Self.FK_Order_City" FromRole="Ad" ToRole="City" />
+          <NavigationProperty Name="Users_Login" Relationship="Self.FK_Order_Users_Login" FromRole="Ad" ToRole="Users_Login" />
+          <NavigationProperty Name="Users_Password" Relationship="Self.FK_Order_Users_Password" FromRole="Ad" ToRole="Users_Password" />
+        </EntityType>
+        <EntityType Name="Ad_Description">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_description1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_Description" FromRole="Ad_Description" ToRole="Ad" />
+        </EntityType>
+        <EntityType Name="Ad_post_date">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_post_date1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_post_date" FromRole="Ad_post_date" ToRole="Ad" />
+        </EntityType>
+        <EntityType Name="Ad_Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_status1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_Status" FromRole="Ad_Status" ToRole="Ad" />
+        </EntityType>
+        <EntityType Name="Ad_Title">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_title1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_Title" FromRole="Ad_Title" ToRole="Ad" />
+        </EntityType>
+        <EntityType Name="Ad_Type">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ad_type1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_Type" FromRole="Ad_Type" ToRole="Ad" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="category1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Category" FromRole="Category" ToRole="Ad" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="city1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Ad" Relationship="Self.FK_Order_City" FromRole="City" ToRole="Ad" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Users_Login">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="user_login" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Users_Login" FromRole="Users_Login" ToRole="Ad" />
+        </EntityType>
+        <EntityType Name="Users_Password">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="user_password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Users_Password" FromRole="Users_Password" ToRole="Ad" />
+        </EntityType>
+        <Association Name="FK_Order_Ad_Description">
+          <End Role="Ad_Description" Type="Self.Ad_Description" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_Description">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_description" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Ad_post_date">
+          <End Role="Ad_post_date" Type="Self.Ad_post_date" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_post_date">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_post_date" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Ad_Status">
+          <End Role="Ad_Status" Type="Self.Ad_Status" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_Status">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Ad_Title">
+          <End Role="Ad_Title" Type="Self.Ad_Title" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_Title">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_title" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Ad_Type">
+          <End Role="Ad_Type" Type="Self.Ad_Type" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ad_Type">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="ad_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="city_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Users_Login">
+          <End Role="Users_Login" Type="Self.Users_Login" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users_Login">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="user_login_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Users_Password">
+          <End Role="Users_Password" Type="Self.Users_Password" Multiplicity="1" />
+          <End Role="Ad" Type="Self.Ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users_Password">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Ad">
+              <PropertyRef Name="user_password_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ad" EntityType="Self.Ad" />
+          <EntitySet Name="Ad_Description" EntityType="Self.Ad_Description" />
+          <EntitySet Name="Ad_post_date" EntityType="Self.Ad_post_date" />
+          <EntitySet Name="Ad_Status" EntityType="Self.Ad_Status" />
+          <EntitySet Name="Ad_Title" EntityType="Self.Ad_Title" />
+          <EntitySet Name="Ad_Type" EntityType="Self.Ad_Type" />
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="City" EntityType="Self.City" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Users_Login" EntityType="Self.Users_Login" />
+          <EntitySet Name="Users_Password" EntityType="Self.Users_Password" />
+          <AssociationSet Name="FK_Order_Ad_Description" Association="Self.FK_Order_Ad_Description">
+            <End Role="Ad_Description" EntitySet="Ad_Description" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Ad_post_date" Association="Self.FK_Order_Ad_post_date">
+            <End Role="Ad_post_date" EntitySet="Ad_post_date" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Ad_Status" Association="Self.FK_Order_Ad_Status">
+            <End Role="Ad_Status" EntitySet="Ad_Status" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Ad_Title" Association="Self.FK_Order_Ad_Title">
+            <End Role="Ad_Title" EntitySet="Ad_Title" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Ad_Type" Association="Self.FK_Order_Ad_Type">
+            <End Role="Ad_Type" EntitySet="Ad_Type" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Category" Association="Self.FK_Order_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_City" Association="Self.FK_Order_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Users_Login" Association="Self.FK_Order_Users_Login">
+            <End Role="Users_Login" EntitySet="Users_Login" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Users_Password" Association="Self.FK_Order_Users_Password">
+            <End Role="Users_Password" EntitySet="Users_Password" />
+            <End Role="Ad" EntitySet="Ad" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Ad">
+            <EntityTypeMapping TypeName="Model.Ad">
+              <MappingFragment StoreEntitySet="Ad">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="user_login_id" ColumnName="user_login_id" />
+                <ScalarProperty Name="user_password_id" ColumnName="user_password_id" />
+                <ScalarProperty Name="ad_title" ColumnName="ad_title" />
+                <ScalarProperty Name="ad_description" ColumnName="ad_description" />
+                <ScalarProperty Name="ad_post_date" ColumnName="ad_post_date" />
+                <ScalarProperty Name="city_id" ColumnName="city_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="ad_type_id" ColumnName="ad_type_id" />
+                <ScalarProperty Name="ad_status_id" ColumnName="ad_status_id" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ad_Description">
+            <EntityTypeMapping TypeName="Model.Ad_Description">
+              <MappingFragment StoreEntitySet="Ad_Description">
+                <ScalarProperty Name="ad_description1" ColumnName="ad_description" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ad_post_date">
+            <EntityTypeMapping TypeName="Model.Ad_post_date">
+              <MappingFragment StoreEntitySet="Ad_post_date">
+                <ScalarProperty Name="ad_post_date1" ColumnName="ad_post_date" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ad_Status">
+            <EntityTypeMapping TypeName="Model.Ad_Status">
+              <MappingFragment StoreEntitySet="Ad_Status">
+                <ScalarProperty Name="ad_status1" ColumnName="ad_status" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ad_Title">
+            <EntityTypeMapping TypeName="Model.Ad_Title">
+              <MappingFragment StoreEntitySet="Ad_Title">
+                <ScalarProperty Name="ad_title1" ColumnName="ad_title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ad_Type">
+            <EntityTypeMapping TypeName="Model.Ad_Type">
+              <MappingFragment StoreEntitySet="Ad_Type">
+                <ScalarProperty Name="ad_type1" ColumnName="ad_type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="Model.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="category1" ColumnName="category" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="City">
+            <EntityTypeMapping TypeName="Model.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="city1" ColumnName="city" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users_Login">
+            <EntityTypeMapping TypeName="Model.Users_Login">
+              <MappingFragment StoreEntitySet="Users_Login">
+                <ScalarProperty Name="user_login" ColumnName="user_login" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users_Password">
+            <EntityTypeMapping TypeName="Model.Users_Password">
+              <MappingFragment StoreEntitySet="Users_Password">
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

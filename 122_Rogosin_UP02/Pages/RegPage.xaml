@@ -1,0 +1,118 @@
+﻿<Page x:Class="_122_Rogosin_UP02.Pages.RegPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_122_Rogosin_UP02.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="RegPage">
+
+    <Grid Background="{StaticResource LightBackgroundBrush}">
+        <Border Background="{StaticResource WhiteBrush}" 
+                BorderBrush="{StaticResource PrimaryBrush}" 
+                BorderThickness="2"
+                CornerRadius="10"
+                Width="400" 
+                Height="500"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+
+            <StackPanel Margin="25" VerticalAlignment="Center">
+                <TextBlock Text="Регистрация" 
+                          FontSize="24" 
+                          FontWeight="Bold" 
+                          Foreground="{StaticResource PrimaryBrush}"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,20"/>
+
+                <Grid Margin="0,10,0,0">
+                    <TextBox x:Name="txtbxLog" 
+                            Height="35"
+                            FontSize="14"
+                            BorderBrush="{StaticResource PrimaryBrush}"
+                            BorderThickness="1"
+                            Padding="10,0,0,0"
+                            TextChanged="txtbxLog_TextChanged"/>
+                    <TextBlock x:Name="lblLogHitn" 
+                              Text="Введите логин" 
+                              Foreground="Gray"
+                              Margin="10,0,0,0"
+                              VerticalAlignment="Center"
+                              IsHitTestVisible="False"
+                              MouseLeftButtonUp="lblLogHitn_MouseLeftButtonUp"/>
+                </Grid>
+
+                <Grid Margin="0,10,0,0">
+                    <PasswordBox x:Name="passBxFrst" 
+                                Height="35"
+                                FontSize="14"
+                                BorderBrush="{StaticResource PrimaryBrush}"
+                                BorderThickness="1"
+                                Padding="10,0,0,0"
+                                PasswordChanged="passBxFrst_PasswordChanged"/>
+                    <TextBlock x:Name="lblPassHitn" 
+                              Text="Введите пароль" 
+                              Foreground="Gray"
+                              Margin="10,0,0,0"
+                              VerticalAlignment="Center"
+                              IsHitTestVisible="False"
+                              MouseLeftButtonUp="lblPassHitn_MouseLeftButtonUp"/>
+                </Grid>
+
+                <Grid Margin="0,10,0,0">
+                    <PasswordBox x:Name="passBxScnd" 
+                                Height="35"
+                                FontSize="14"
+                                BorderBrush="{StaticResource PrimaryBrush}"
+                                BorderThickness="1"
+                                Padding="10,0,0,0"
+                                PasswordChanged="passBxScnd_PasswordChanged"/>
+                    <TextBlock x:Name="lblPassSecHitn" 
+                              Text="Подтвердите пароль" 
+                              Foreground="Gray"
+                              Margin="10,0,0,0"
+                              VerticalAlignment="Center"
+                              IsHitTestVisible="False"
+                              MouseLeftButtonUp="lblPassSecHitn_MouseLeftButtonUp"/>
+                </Grid>
+
+                <TextBlock x:Name="ErrorText" 
+                          Text="" 
+                          Foreground="Red"
+                          FontSize="12"
+                          HorizontalAlignment="Center"
+                          Visibility="Collapsed"
+                          Margin="0,10,0,0"
+                          TextWrapping="Wrap"/>
+
+                <StackPanel Orientation="Horizontal" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,20,0,0">
+                    <Button x:Name="regButton" 
+                            Content="Зарегистрироваться" 
+                            Click="regButton_Click"
+                            Height="35"
+                            MinWidth="120"
+                            Background="{StaticResource PrimaryBrush}"
+                            Foreground="White"
+                            BorderThickness="0"
+                            FontSize="14"
+                            Cursor="Hand"/>
+
+                    <Button x:Name="ButtonBack" 
+                            Content="Назад" 
+                            Click="ButtonBack_Click"
+                            Height="35"
+                            MinWidth="80"
+                            Background="{StaticResource SecondaryBrush}"
+                            Foreground="White"
+                            BorderThickness="0"
+                            FontSize="14"
+                            Cursor="Hand"
+                            Margin="10,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

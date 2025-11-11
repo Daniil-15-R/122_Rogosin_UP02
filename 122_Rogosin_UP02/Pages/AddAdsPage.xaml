@@ -1,0 +1,138 @@
+﻿<Page x:Class="_122_Rogosin_UP02.Pages.AddAdsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:_122_Rogosin_UP02.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Добавление объявления">
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" 
+                   Text="Добавление нового объявления" 
+                   Style="{StaticResource LargeHeaderStyle}"/>
+
+        <!-- Основная форма -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20">
+            <StackPanel MaxWidth="600">
+
+                <!-- Основная информация -->
+                <GroupBox Header="Основная информация" Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Название объявления*" Style="{StaticResource SubHeaderStyle}"/>
+                        <TextBox x:Name="txtTitle" 
+                                 Style="{StaticResource TextBoxFieldStyle}"
+                                 ToolTip="Введите название объявления"/>
+
+                        <TextBlock Text="Описание*" Style="{StaticResource SubHeaderStyle}"/>
+                        <TextBox x:Name="txtDescription" 
+                                 Style="{StaticResource TextBoxFieldStyle}"
+                                 Height="80" 
+                                 TextWrapping="Wrap" 
+                                 AcceptsReturn="True"
+                                 VerticalScrollBarVisibility="Auto"
+                                 ToolTip="Введите подробное описание"/>
+
+                        <TextBlock Text="Категория*" Style="{StaticResource SubHeaderStyle}"/>
+                        <ComboBox x:Name="cmbCategory" 
+                                  DisplayMemberPath="category1"
+                                  Style="{StaticResource {x:Type ComboBox}}"
+                                  Margin="16,8,16,8"
+                                  Width="250"/>
+
+                        <TextBlock Text="Тип объявления*" Style="{StaticResource SubHeaderStyle}"/>
+                        <ComboBox x:Name="cmbAdType" 
+                                  DisplayMemberPath="ad_type1"
+                                  Style="{StaticResource {x:Type ComboBox}}"
+                                  Margin="16,8,16,8"
+                                  Width="250"/>
+
+                        <TextBlock Text="Статус объявления*" Style="{StaticResource SubHeaderStyle}"/>
+                        <ComboBox x:Name="cmbAdStatus" 
+                                  DisplayMemberPath="ad_status1"
+                                  Style="{StaticResource {x:Type ComboBox}}"
+                                  Margin="16,8,16,8"
+                                  Width="250"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Местоположение и цена -->
+                <GroupBox Header="Местоположение и цена" Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="Город*" Style="{StaticResource SubHeaderStyle}"/>
+                        <ComboBox x:Name="cmbCity" 
+                                  DisplayMemberPath="city1"
+                                  Style="{StaticResource {x:Type ComboBox}}"
+                                  Margin="16,8,16,8"
+                                  Width="250"/>
+
+                        <TextBlock Text="Цена" Style="{StaticResource SubHeaderStyle}"/>
+                        <TextBox x:Name="txtPrice" 
+                                 Style="{StaticResource TextBoxFieldStyle}"
+                                 ToolTip="Введите цену в рублях"/>
+
+                        <TextBlock Text="Дата публикации" Style="{StaticResource SubHeaderStyle}"/>
+                        <DatePicker x:Name="dpPostDate"
+                                    Margin="16,8,16,8"
+                                    Width="250"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Контактная информация -->
+                <GroupBox Header="Контактная информация">
+                    <StackPanel>
+                        <TextBlock Text="Логин пользователя*" Style="{StaticResource SubHeaderStyle}"/>
+                        <ComboBox x:Name="cmbUserLogin" 
+                                  DisplayMemberPath="user_login1"
+                                  Style="{StaticResource {x:Type ComboBox}}"
+                                  Margin="16,8,16,8"
+                                  Width="250"/>
+
+                        <TextBlock Text="Пароль пользователя*" Style="{StaticResource SubHeaderStyle}"/>
+                        <ComboBox x:Name="cmbUserPassword" 
+                                  DisplayMemberPath="user_password1"
+                                  Style="{StaticResource {x:Type ComboBox}}"
+                                  Margin="16,8,16,8"
+                                  Width="250"/>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Панель кнопок -->
+        <Border Grid.Row="2" 
+                Background="{StaticResource LightBackgroundBrush}" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="0,1,0,0"
+                Padding="16">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnCancel" 
+                        Content="Отмена" 
+                        Style="{StaticResource MediumButtonStyle}"
+                        Click="btnCancel_Click"/>
+                <Button x:Name="btnSave" 
+                        Content="Сохранить" 
+                        Style="{StaticResource ActionButtonStyle}"
+                        Click="btnSave_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Сообщения об ошибках/успехе -->
+        <TextBlock x:Name="txtMessage" 
+                   Grid.Row="1"
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Center"
+                   Margin="20"
+                   TextWrapping="Wrap"
+                   Visibility="Collapsed"/>
+    </Grid>
+</Page>
