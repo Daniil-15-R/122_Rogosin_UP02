@@ -123,8 +123,39 @@ namespace _122_Rogosin_UP02.Pages
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Функция добавления объявления будет реализована позже", "Информация",
-                          MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                int currentUserId = GetCurrentUserId();
+                AddAdsPage addAdsPage = new AddAdsPage(currentUserId);
+
+                addAdsPage.AdAdded += (s, args) =>
+                {
+                    LoadAds(); // Обновляем список после добавления
+                };
+
+                // Проверяем доступность навигации
+                if (NavigationService != null)
+                {
+                    NavigationService.Navigate(addAdsPage);
+                }
+                else
+                {
+                    MessageBox.Show("Сервис навигации недоступен", "Ошибка",
+                                  MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при переходе на страницу добавления: {ex.Message}",
+                              "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        // Метод для получения ID текущего пользователя (заглушка - замените на реальную реализацию)
+        private int GetCurrentUserId()
+        {
+            // TODO: Замените на реальный способ получения ID текущего пользователя
+            // Это может быть из настроек приложения, из базы данных, или другой источник
+            return 1; // Временная заглушка
         }
 
         // Обработчик клика по объявлению (если нужно открыть детали)
