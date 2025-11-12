@@ -33,7 +33,6 @@
                           FontWeight="Bold"
                           VerticalAlignment="Center"/>
 
-                <!-- Фильтр по статусу -->
                 <ComboBox Grid.Column="1" 
                          x:Name="FilterComboBox"
                          Width="150" 
@@ -44,7 +43,6 @@
                     <ComboBoxItem Content="Завершенные"/>
                 </ComboBox>
 
-                <!-- Фильтр по типу услуг -->
                 <ComboBox Grid.Column="2" 
                          x:Name="TypeFilterComboBox"
                          Width="150" 

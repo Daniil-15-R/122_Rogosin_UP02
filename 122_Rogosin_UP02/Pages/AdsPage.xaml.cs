@@ -30,10 +30,7 @@ namespace _122_Rogosin_UP02.Pages
         {
             try
             {
-                // Загружаем все типы объявлений
                 adTypes = db.Ad_Type.ToList();
-
-                // Заполняем комбобокс фильтра по типам
                 TypeFilterComboBox.Items.Clear();
                 TypeFilterComboBox.Items.Add(new ComboBoxItem { Content = "Все типы", IsSelected = true });
 
@@ -81,7 +78,6 @@ namespace _122_Rogosin_UP02.Pages
 
             var displayAds = allAds.Select(ad => new AdDisplayModel(ad)).ToList();
 
-            // Фильтрация по статусу
             var statusFilter = (FilterComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             if (!string.IsNullOrEmpty(statusFilter))
             {
@@ -130,10 +126,9 @@ namespace _122_Rogosin_UP02.Pages
 
                 addAdsPage.AdAdded += (s, args) =>
                 {
-                    LoadAds(); // Обновляем список после добавления
+                    LoadAds();
                 };
 
-                // Проверяем доступность навигации
                 if (NavigationService != null)
                 {
                     NavigationService.Navigate(addAdsPage);
@@ -150,15 +145,11 @@ namespace _122_Rogosin_UP02.Pages
                               "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        // Метод для получения ID текущего пользователя (заглушка - замените на реальную реализацию)
         private int GetCurrentUserId()
         {
-            // TODO: Замените на реальный способ получения ID текущего пользователя
-            // Это может быть из настроек приложения, из базы данных, или другой источник
-            return 1; // Временная заглушка
+            return 1;
         }
 
-        // Обработчик клика по объявлению (если нужно открыть детали)
         private void AdItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is FrameworkElement element && element.DataContext is AdDisplayModel ad)
@@ -172,7 +163,6 @@ namespace _122_Rogosin_UP02.Pages
         {
             base.OnInitialized(e);
 
-            // Добавляем обработчик клика для каждого элемента
             if (AdsItemsControl != null)
             {
                 AdsItemsControl.AddHandler(MouseLeftButtonDownEvent,
@@ -181,7 +171,6 @@ namespace _122_Rogosin_UP02.Pages
         }
     }
 
-    // Вспомогательный класс для отображения объявлений
     public class AdDisplayModel
     {
         private readonly Ad _ad;

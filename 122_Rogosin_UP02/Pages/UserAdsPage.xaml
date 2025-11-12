@@ -15,7 +15,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок и кнопки управления -->
         <Border Grid.Row="0" Background="{StaticResource LightPrimaryBrush}" Padding="16">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -46,14 +45,11 @@
             </Grid>
         </Border>
 
-        <!-- Список объявлений пользователя -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="AdsPanel" Margin="16">
-                <!-- Объявления будут добавляться динамически -->
             </StackPanel>
         </ScrollViewer>
-
-        <!-- Статусная строка -->
+        
         <StatusBar Grid.Row="2">
             <StatusBarItem>
                 <TextBlock x:Name="StatusText" Text="Загрузка объявлений..."/>

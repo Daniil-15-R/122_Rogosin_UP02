@@ -15,16 +15,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок -->
         <TextBlock Grid.Row="0" 
                    Text="Добавление нового объявления" 
                    Style="{StaticResource LargeHeaderStyle}"/>
 
-        <!-- Основная форма -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20">
             <StackPanel MaxWidth="600">
 
-                <!-- Основная информация -->
                 <GroupBox Header="Основная информация" Margin="0,0,0,16">
                     <StackPanel>
                         <TextBlock Text="Название объявления*" Style="{StaticResource SubHeaderStyle}"/>
@@ -34,11 +31,8 @@
 
                         <TextBlock Text="Описание*" Style="{StaticResource SubHeaderStyle}"/>
                         <TextBox x:Name="txtDescription" 
-                                 Style="{StaticResource TextBoxFieldStyle}"
-                                 Height="80" 
-                                 TextWrapping="Wrap" 
-                                 AcceptsReturn="True"
-                                 VerticalScrollBarVisibility="Auto"
+                                 Style="{StaticResource MultilineTextBoxStyle}"
+                                 Height="80"
                                  ToolTip="Введите подробное описание"/>
 
                         <TextBlock Text="Категория*" Style="{StaticResource SubHeaderStyle}"/>
@@ -64,7 +58,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <!-- Местоположение и цена -->
+                <!-- Остальная часть XAML остается без изменений -->
                 <GroupBox Header="Местоположение и цена" Margin="0,0,0,16">
                     <StackPanel>
                         <TextBlock Text="Город*" Style="{StaticResource SubHeaderStyle}"/>
@@ -86,7 +80,6 @@
                     </StackPanel>
                 </GroupBox>
 
-                <!-- Контактная информация -->
                 <GroupBox Header="Контактная информация">
                     <StackPanel>
                         <TextBlock Text="Логин пользователя*" Style="{StaticResource SubHeaderStyle}"/>
@@ -108,7 +101,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <!-- Панель кнопок -->
         <Border Grid.Row="2" 
                 Background="{StaticResource LightBackgroundBrush}" 
                 BorderBrush="{StaticResource BorderBrush}" 
@@ -126,7 +118,6 @@
             </StackPanel>
         </Border>
 
-        <!-- Сообщения об ошибках/успехе -->
         <TextBlock x:Name="txtMessage" 
                    Grid.Row="1"
                    VerticalAlignment="Top"

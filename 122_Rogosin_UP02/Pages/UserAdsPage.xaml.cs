@@ -21,14 +21,12 @@ namespace _122_Rogosin_UP02.Pages
             LoadUserAds();
         }
 
-        // Загрузка объявлений пользователя
         private void LoadUserAds()
         {
             try
             {
                 using (var context = new Entities())
                 {
-                    // Получаем объявления текущего пользователя
                     _userAds = context.Ad
                         .Where(a => a.user_login_id == _currentUserId)
                         .ToList();
@@ -42,7 +40,6 @@ namespace _122_Rogosin_UP02.Pages
             }
         }
 
-        // Отображение объявлений
         private void DisplayAds()
         {
             AdsPanel.Children.Clear();
@@ -66,7 +63,6 @@ namespace _122_Rogosin_UP02.Pages
             UpdateStatusText();
         }
 
-        // Создание карточки объявления
         private Border CreateAdCard(Ad ad)
         {
             var card = new Border
@@ -79,10 +75,8 @@ namespace _122_Rogosin_UP02.Pages
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
-            // Основная информация об объявлении
             var mainStack = new StackPanel();
 
-            // Заголовок и статус
             var headerStack = new StackPanel { Orientation = Orientation.Horizontal };
 
             var titleText = new TextBlock
@@ -103,7 +97,6 @@ namespace _122_Rogosin_UP02.Pages
             headerStack.Children.Add(titleText);
             headerStack.Children.Add(statusText);
 
-            // Описание
             var descText = new TextBlock
             {
                 Text = ad.Ad_Description1?.ad_description1 ?? "Описание отсутствует",
@@ -112,7 +105,6 @@ namespace _122_Rogosin_UP02.Pages
                 Margin = new Thickness(0, 4, 0, 4)
             };
 
-            // Детали
             var detailsStack = new StackPanel { Orientation = Orientation.Horizontal };
 
             var typeText = new TextBlock
@@ -145,7 +137,6 @@ namespace _122_Rogosin_UP02.Pages
             detailsStack.Children.Add(cityText);
             detailsStack.Children.Add(priceText);
 
-            // Дата публикации
             var dateText = new TextBlock
             {
                 Text = $"Опубликовано: {ad.Ad_post_date1?.ad_post_date1 ?? "Дата не указана"}",
@@ -160,7 +151,6 @@ namespace _122_Rogosin_UP02.Pages
 
             Grid.SetColumn(mainStack, 0);
 
-            // Кнопки управления
             var buttonsStack = new StackPanel
             {
                 Orientation = Orientation.Vertical,
@@ -208,7 +198,6 @@ namespace _122_Rogosin_UP02.Pages
             return card;
         }
 
-        // Получение текста статуса
         private string GetStatusText(string status)
         {
             if (string.IsNullOrEmpty(status)) return "Неизвестно";
@@ -222,7 +211,6 @@ namespace _122_Rogosin_UP02.Pages
             return status;
         }
 
-        // Получение цвета статуса
         private Brush GetStatusColor(string status)
         {
             if (string.IsNullOrEmpty(status))
@@ -237,7 +225,6 @@ namespace _122_Rogosin_UP02.Pages
             return (Brush)FindResource("PrimaryTextBrush");
         }
 
-        // Текст для кнопки изменения статуса
         private string GetStatusButtonText(string status)
         {
             if (string.IsNullOrEmpty(status)) return "Изменить статус";
@@ -251,7 +238,6 @@ namespace _122_Rogosin_UP02.Pages
             return "Изменить статус";
         }
 
-        // Сообщение при отсутствии объявлений
         private void ShowNoAdsMessage()
         {
             var messageText = new TextBlock
@@ -269,7 +255,6 @@ namespace _122_Rogosin_UP02.Pages
             StatusText.Text = "Объявления не найдены";
         }
 
-        // Обновление статусной строки
         private void UpdateStatusText()
         {
             if (_userAds == null)
@@ -287,7 +272,6 @@ namespace _122_Rogosin_UP02.Pages
             StatusText.Text = $"{currentMode} | Всего: {_userAds.Count} | Активных: {activeCount} | Завершенных: {completedCount}";
         }
 
-        // Редактирование объявления
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
@@ -311,7 +295,6 @@ namespace _122_Rogosin_UP02.Pages
 
                     if (adToEdit != null)
                     {
-                        // Переход на страницу редактирования с передачей объявления
                         var editPage = new AddAdsPage(_currentUserId, adToEdit);
                         editPage.AdUpdated += (s, args) => LoadUserAds();
                         NavigationService.Navigate(editPage);
@@ -324,7 +307,6 @@ namespace _122_Rogosin_UP02.Pages
             }
         }
 
-        // Изменение статуса объявления
         private void StatusButton_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
@@ -338,18 +320,165 @@ namespace _122_Rogosin_UP02.Pages
                     if (adToUpdate != null)
                     {
                         var currentStatus = adToUpdate.Ad_Status?.ad_status1;
-                        string newStatus;
 
                         if (GetStatusText(currentStatus) == "Активно")
                         {
-                            // Завершение объявления - запрашиваем прибыль
-                            var profitInput = new ProfitInputDialog();
-                            if (profitInput.ShowDialog() == true)
+                            var choiceDialog = new Window
                             {
-                                var profit = profitInput.Profit;
-                                newStatus = "Завершено";
+                                Title = "Завершение объявления",
+                                Height = 150,
+                                Width = 300,
+                                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                                ResizeMode = ResizeMode.NoResize
+                            };
 
-                                // Обновляем статус
+                            var stackPanel = new StackPanel { Margin = new Thickness(16) };
+
+                            var questionText = new TextBlock
+                            {
+                                Text = "Как завершить объявление?",
+                                FontWeight = FontWeights.Bold,
+                                Margin = new Thickness(0, 0, 0, 12)
+                            };
+
+                            var withProfitButton = new Button
+                            {
+                                Content = "С прибылью",
+                                Margin = new Thickness(0, 0, 0, 8),
+                                Height = 30
+                            };
+
+                            var withoutProfitButton = new Button
+                            {
+                                Content = "Без прибыли (бесплатно)",
+                                Margin = new Thickness(0, 0, 0, 8),
+                                Height = 30
+                            };
+
+                            var cancelButton = new Button
+                            {
+                                Content = "Отмена",
+                                Height = 30
+                            };
+
+                            bool? finalResult = null;
+                            bool hasProfit = false;
+                            decimal profit = 0;
+
+                            withProfitButton.Click += (s1, e1) =>
+                            {
+                                choiceDialog.Close();
+
+                                var profitDialog = new Window
+                                {
+                                    Title = "Ввод прибыли",
+                                    Height = 120,
+                                    Width = 250,
+                                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                                    ResizeMode = ResizeMode.NoResize
+                                };
+
+                                var profitStack = new StackPanel { Margin = new Thickness(16) };
+
+                                var profitLabel = new TextBlock
+                                {
+                                    Text = "Введите сумму прибыли:",
+                                    Margin = new Thickness(0, 0, 0, 8)
+                                };
+
+                                var profitTextBox = new TextBox
+                                {
+                                    Height = 25,
+                                    Text = "0"
+                                };
+
+                                var profitButtonPanel = new StackPanel
+                                {
+                                    Orientation = Orientation.Horizontal,
+                                    HorizontalAlignment = HorizontalAlignment.Right,
+                                    Margin = new Thickness(0, 8, 0, 0)
+                                };
+
+                                var okButton = new Button
+                                {
+                                    Content = "OK",
+                                    Width = 80,
+                                    Margin = new Thickness(0, 0, 8, 0)
+                                };
+
+                                var backButton = new Button
+                                {
+                                    Content = "Назад",
+                                    Width = 80
+                                };
+
+                                okButton.Click += (s2, e2) =>
+                                {
+                                    if (decimal.TryParse(profitTextBox.Text, out decimal parsedProfit) && parsedProfit >= 0)
+                                    {
+                                        hasProfit = true;
+                                        profit = parsedProfit;
+                                        finalResult = true;
+                                        profitDialog.Close();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Введите корректную сумму прибыли", "Ошибка",
+                                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                                    }
+                                };
+
+                                backButton.Click += (s3, e3) =>
+                                {
+                                    finalResult = null;
+                                    profitDialog.Close();
+                                    StatusButton_Click(sender, e);
+                                };
+
+                                profitButtonPanel.Children.Add(okButton);
+                                profitButtonPanel.Children.Add(backButton);
+
+                                profitStack.Children.Add(profitLabel);
+                                profitStack.Children.Add(profitTextBox);
+                                profitStack.Children.Add(profitButtonPanel);
+
+                                profitDialog.Content = profitStack;
+                                profitDialog.ShowDialog();
+                            };
+
+                            withoutProfitButton.Click += (s4, e4) =>
+                            {
+                                hasProfit = false;
+                                profit = 0;
+                                finalResult = true;
+                                choiceDialog.Close();
+                            };
+
+                            cancelButton.Click += (s5, e5) =>
+                            {
+                                finalResult = false;
+                                choiceDialog.Close();
+                            };
+
+                            stackPanel.Children.Add(questionText);
+                            stackPanel.Children.Add(withProfitButton);
+                            stackPanel.Children.Add(withoutProfitButton);
+                            stackPanel.Children.Add(cancelButton);
+
+                            choiceDialog.Content = stackPanel;
+                            choiceDialog.ShowDialog();
+
+                            if (finalResult == true)
+                            {
+                                if (hasProfit)
+                                {
+                                    ShowSuccessMessage($"Объявление завершено. Прибыль: {profit:C}");
+                                }
+                                else
+                                {
+                                    ShowSuccessMessage("Объявление завершено без прибыли");
+                                }
+
                                 var completedStatus = context.Ad_Status.FirstOrDefault(s =>
                                     s.ad_status1.ToLower() == "completed" || s.ad_status1.ToLower() == "завершено");
                                 if (completedStatus != null)
@@ -357,17 +486,12 @@ namespace _122_Rogosin_UP02.Pages
                                     adToUpdate.ad_status_id = completedStatus.ID;
                                 }
 
-                                ShowSuccessMessage($"Объявление завершено. Прибыль: {profit:C}");
-                            }
-                            else
-                            {
-                                return; // Пользователь отменил ввод
+                                context.SaveChanges();
+                                LoadUserAds();
                             }
                         }
                         else
                         {
-                            // Активация объявления
-                            newStatus = "Активно";
                             var activeStatus = context.Ad_Status.FirstOrDefault(s =>
                                 s.ad_status1.ToLower() == "active" || s.ad_status1.ToLower() == "активно");
                             if (activeStatus != null)
@@ -375,11 +499,10 @@ namespace _122_Rogosin_UP02.Pages
                                 adToUpdate.ad_status_id = activeStatus.ID;
                             }
 
+                            context.SaveChanges();
                             ShowSuccessMessage("Объявление активировано");
+                            LoadUserAds();
                         }
-
-                        context.SaveChanges();
-                        LoadUserAds(); // Обновляем список
                     }
                 }
             }
@@ -389,7 +512,6 @@ namespace _122_Rogosin_UP02.Pages
             }
         }
 
-        // Удаление объявления
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
@@ -414,7 +536,7 @@ namespace _122_Rogosin_UP02.Pages
                             context.SaveChanges();
 
                             ShowSuccessMessage("Объявление успешно удалено");
-                            LoadUserAds(); // Обновляем список
+                            LoadUserAds();
                         }
                     }
                 }
@@ -425,7 +547,6 @@ namespace _122_Rogosin_UP02.Pages
             }
         }
 
-        // Переключение на завершенные объявления
         private void BtnCompletedAds_Click(object sender, RoutedEventArgs e)
         {
             _showCompletedOnly = !_showCompletedOnly;
@@ -433,7 +554,6 @@ namespace _122_Rogosin_UP02.Pages
             DisplayAds();
         }
 
-        // Добавление нового объявления - ПЕРЕХОД НА AddAdsPage
         private void BtnAddAd_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -441,7 +561,6 @@ namespace _122_Rogosin_UP02.Pages
                 var addAdsPage = new AddAdsPage(_currentUserId);
                 addAdsPage.AdAdded += (s, args) =>
                 {
-                    // Обновляем список объявлений после добавления нового
                     LoadUserAds();
                 };
                 NavigationService.Navigate(addAdsPage);
@@ -452,7 +571,6 @@ namespace _122_Rogosin_UP02.Pages
             }
         }
 
-        // Назад к главной странице
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             if (NavigationService.CanGoBack)
@@ -460,8 +578,6 @@ namespace _122_Rogosin_UP02.Pages
                 NavigationService.GoBack();
             }
         }
-
-        // Вспомогательные методы для сообщений
         private void ShowErrorMessage(string message)
         {
             MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -473,8 +589,6 @@ namespace _122_Rogosin_UP02.Pages
             MessageBox.Show(message, "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
-
-    // Простой диалог для ввода прибыли
     public class ProfitInputDialog
     {
         public decimal Profit { get; private set; }
