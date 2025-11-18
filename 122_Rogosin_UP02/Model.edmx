@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_login_id" Type="int" Nullable="false" />
           <Property Name="user_password_id" Type="int" Nullable="false" />
           <Property Name="ad_title" Type="int" Nullable="false" />
@@ -26,42 +26,42 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_description" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Ad_post_date">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_post_date" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Ad_Status">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_status" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Ad_Title">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_title" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Ad_Type">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_type" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="category" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -85,14 +85,14 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="user_login" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Users_Password">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="user_password" Type="nvarchar" MaxLength="255" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <Association Name="FK_Order_Ad_Description">
           <End Role="Ad_Description" Type="Self.Ad_Description" Multiplicity="1" />
@@ -260,7 +260,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="user_login_id" Type="Int32" Nullable="false" />
           <Property Name="user_password_id" Type="Int32" Nullable="false" />
           <Property Name="ad_title" Type="Int32" Nullable="false" />
@@ -286,7 +286,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_description1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_Description" FromRole="Ad_Description" ToRole="Ad" />
         </EntityType>
         <EntityType Name="Ad_post_date">
@@ -294,7 +294,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_post_date1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_post_date" FromRole="Ad_post_date" ToRole="Ad" />
         </EntityType>
         <EntityType Name="Ad_Status">
@@ -302,7 +302,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_status1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_Status" FromRole="Ad_Status" ToRole="Ad" />
         </EntityType>
         <EntityType Name="Ad_Title">
@@ -310,7 +310,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_title1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_Title" FromRole="Ad_Title" ToRole="Ad" />
         </EntityType>
         <EntityType Name="Ad_Type">
@@ -318,7 +318,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ad_type1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Ad_Type" FromRole="Ad_Type" ToRole="Ad" />
         </EntityType>
         <EntityType Name="Category">
@@ -326,7 +326,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="category1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Category" FromRole="Category" ToRole="Ad" />
         </EntityType>
         <EntityType Name="City">
@@ -352,7 +352,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="user_login" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Users_Login" FromRole="Users_Login" ToRole="Ad" />
         </EntityType>
         <EntityType Name="Users_Password">
@@ -360,7 +360,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="user_password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Ad" Relationship="Self.FK_Order_Users_Password" FromRole="Users_Password" ToRole="Ad" />
         </EntityType>
         <Association Name="FK_Order_Ad_Description">

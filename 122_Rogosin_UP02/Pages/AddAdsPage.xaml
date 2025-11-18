@@ -58,7 +58,6 @@
                     </StackPanel>
                 </GroupBox>
 
-                <!-- Остальная часть XAML остается без изменений -->
                 <GroupBox Header="Местоположение и цена" Margin="0,0,0,16">
                     <StackPanel>
                         <TextBlock Text="Город*" Style="{StaticResource SubHeaderStyle}"/>
@@ -80,23 +79,7 @@
                     </StackPanel>
                 </GroupBox>
 
-                <GroupBox Header="Контактная информация">
-                    <StackPanel>
-                        <TextBlock Text="Логин пользователя*" Style="{StaticResource SubHeaderStyle}"/>
-                        <ComboBox x:Name="cmbUserLogin" 
-                                  DisplayMemberPath="user_login1"
-                                  Style="{StaticResource {x:Type ComboBox}}"
-                                  Margin="16,8,16,8"
-                                  Width="250"/>
-
-                        <TextBlock Text="Пароль пользователя*" Style="{StaticResource SubHeaderStyle}"/>
-                        <ComboBox x:Name="cmbUserPassword" 
-                                  DisplayMemberPath="user_password1"
-                                  Style="{StaticResource {x:Type ComboBox}}"
-                                  Margin="16,8,16,8"
-                                  Width="250"/>
-                    </StackPanel>
-                </GroupBox>
+                <!-- Убрана группа с контактной информацией, так как она больше не нужна -->
 
             </StackPanel>
         </ScrollViewer>

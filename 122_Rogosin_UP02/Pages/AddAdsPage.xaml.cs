@@ -29,7 +29,9 @@ namespace _122_Rogosin_UP02.Pages
         {
             InitializeComponent();
             _currentUserId = userId;
-            _editingAd = adToEdit;
+            context = new _122_Rogosin_UP02.Entities();
+            // Перезагружаем сущность из текущего контекста
+            _editingAd = context.Ad.Find(adToEdit.ID);
             InitializePage();
         }
 
@@ -37,7 +39,10 @@ namespace _122_Rogosin_UP02.Pages
         {
             try
             {
-                context = new _122_Rogosin_UP02.Entities();
+                if (context == null)
+                {
+                    context = new _122_Rogosin_UP02.Entities();
+                }
                 LoadData();
 
                 // Если редактируем существующее объявление - заполняем поля
@@ -79,24 +84,18 @@ namespace _122_Rogosin_UP02.Pages
                     txtPrice.Text = _editingAd.price.Value.ToString();
                 }
 
-                // Установка выбранных элементов в комбобоксы
-                if (_editingAd.Category != null)
-                    cmbCategory.SelectedValue = _editingAd.Category.ID;
+                // Установка выбранных элементов в комбобоксы по ID
+                if (_editingAd.category_id > 0)
+                    cmbCategory.SelectedValue = _editingAd.category_id;
 
-                if (_editingAd.Ad_Type != null)
-                    cmbAdType.SelectedValue = _editingAd.Ad_Type.ID;
+                if (_editingAd.ad_type_id > 0)
+                    cmbAdType.SelectedValue = _editingAd.ad_type_id;
 
-                if (_editingAd.Ad_Status != null)
-                    cmbAdStatus.SelectedValue = _editingAd.Ad_Status.ID;
+                if (_editingAd.ad_status_id > 0)
+                    cmbAdStatus.SelectedValue = _editingAd.ad_status_id;
 
-                if (_editingAd.City != null)
-                    cmbCity.SelectedValue = _editingAd.City.ID;
-
-                if (_editingAd.Users_Login != null)
-                    cmbUserLogin.SelectedValue = _editingAd.Users_Login.ID;
-
-                if (_editingAd.Users_Password != null)
-                    cmbUserPassword.SelectedValue = _editingAd.Users_Password.ID;
+                if (_editingAd.city_id > 0)
+                    cmbCity.SelectedValue = _editingAd.city_id;
             }
             catch (Exception ex)
             {
@@ -128,27 +127,11 @@ namespace _122_Rogosin_UP02.Pages
                 cmbCity.DisplayMemberPath = "city1";
                 cmbCity.SelectedValuePath = "ID";
 
-                // Загрузка пользователей
-                cmbUserLogin.ItemsSource = context.Users_Login.ToList();
-                cmbUserLogin.DisplayMemberPath = "user_login1";
-                cmbUserLogin.SelectedValuePath = "ID";
-
-                cmbUserPassword.ItemsSource = context.Users_Password.ToList();
-                cmbUserPassword.DisplayMemberPath = "user_password1";
-                cmbUserPassword.SelectedValuePath = "ID";
+                // Убрана загрузка пользователей, так как форма теперь независима от логина и пароля
 
                 // Если создаем новое объявление - устанавливаем значения по умолчанию
                 if (_editingAd == null)
                 {
-                    // Установка текущего пользователя по умолчанию
-                    var currentUserLogin = context.Users_Login.FirstOrDefault(u => u.ID == _currentUserId);
-                    var currentUserPassword = context.Users_Password.FirstOrDefault(u => u.ID == _currentUserId);
-
-                    if (currentUserLogin != null)
-                        cmbUserLogin.SelectedValue = currentUserLogin.ID;
-                    if (currentUserPassword != null)
-                        cmbUserPassword.SelectedValue = currentUserPassword.ID;
-
                     // Установка текущей даты по умолчанию
                     dpPostDate.SelectedDate = DateTime.Today;
 
@@ -242,19 +225,7 @@ namespace _122_Rogosin_UP02.Pages
                 return false;
             }
 
-            if (cmbUserLogin.SelectedItem == null)
-            {
-                ShowMessage("Пожалуйста, выберите логин пользователя", true);
-                cmbUserLogin.Focus();
-                return false;
-            }
-
-            if (cmbUserPassword.SelectedItem == null)
-            {
-                ShowMessage("Пожалуйста, выберите пароль пользователя", true);
-                cmbUserPassword.Focus();
-                return false;
-            }
+            // Убраны проверки логина и пароля пользователя
 
             if (!string.IsNullOrWhiteSpace(txtPrice.Text) && !double.TryParse(txtPrice.Text, out _))
             {
@@ -289,8 +260,6 @@ namespace _122_Rogosin_UP02.Pages
                 var selectedAdType = cmbAdType.SelectedItem as Ad_Type;
                 var selectedAdStatus = cmbAdStatus.SelectedItem as Ad_Status;
                 var selectedCity = cmbCity.SelectedItem as City;
-                var selectedUserLogin = cmbUserLogin.SelectedItem as Users_Login;
-                var selectedUserPassword = cmbUserPassword.SelectedItem as Users_Password;
 
                 // Создание основного объявления
                 var advertisement = new Ad
@@ -303,12 +272,8 @@ namespace _122_Rogosin_UP02.Pages
                     Ad_Status = selectedAdStatus,
                     Category = selectedCategory,
                     City = selectedCity,
-                    Users_Login = selectedUserLogin,
-                    Users_Password = selectedUserPassword,
 
                     // Прямые поля (ID)
-                    user_login_id = selectedUserLogin.ID,
-                    user_password_id = selectedUserPassword.ID,
                     ad_title = adTitle.ID,
                     ad_description = adDescription.ID,
                     ad_post_date = adPostDate.ID,
@@ -316,6 +281,10 @@ namespace _122_Rogosin_UP02.Pages
                     category_id = selectedCategory.ID,
                     ad_type_id = selectedAdType.ID,
                     ad_status_id = selectedAdStatus.ID,
+
+                    // Используем текущего пользователя для связи
+                    user_login_id = _currentUserId,
+                    user_password_id = _currentUserId,
 
                     // Цена (может быть null)
                     price = string.IsNullOrWhiteSpace(txtPrice.Text) ? null : (double?)double.Parse(txtPrice.Text)
@@ -345,7 +314,21 @@ namespace _122_Rogosin_UP02.Pages
         {
             try
             {
-                // Обновление связанных записей
+                // Получаем выбранные объекты
+                var selectedCategory = cmbCategory.SelectedItem as Category;
+                var selectedAdType = cmbAdType.SelectedItem as Ad_Type;
+                var selectedAdStatus = cmbAdStatus.SelectedItem as Ad_Status;
+                var selectedCity = cmbCity.SelectedItem as City;
+
+                // ПРОВЕРКА ВЫБРАННЫХ ЗНАЧЕНИЙ
+                if (selectedCategory == null) throw new Exception("Категория не выбрана");
+                if (selectedAdType == null) throw new Exception("Тип объявления не выбран");
+                if (selectedAdStatus == null) throw new Exception("Статус объявления не выбран");
+                if (selectedCity == null) throw new Exception("Город не выбран");
+
+                // ОБНОВЛЕНИЕ СВЯЗАННЫХ ЗАПИСЕЙ С СОХРАНЕНИЕМ
+
+                // Обновление заголовка
                 if (_editingAd.Ad_Title1 != null)
                 {
                     _editingAd.Ad_Title1.ad_title1 = txtTitle.Text.Trim();
@@ -354,10 +337,11 @@ namespace _122_Rogosin_UP02.Pages
                 {
                     var newTitle = new Ad_Title { ad_title1 = txtTitle.Text.Trim() };
                     context.Ad_Title.Add(newTitle);
-                    _editingAd.Ad_Title1 = newTitle;
+                    context.SaveChanges(); // Сохраняем для получения ID
                     _editingAd.ad_title = newTitle.ID;
                 }
 
+                // Обновление описания
                 if (_editingAd.Ad_Description1 != null)
                 {
                     _editingAd.Ad_Description1.ad_description1 = txtDescription.Text.Trim();
@@ -366,7 +350,7 @@ namespace _122_Rogosin_UP02.Pages
                 {
                     var newDescription = new Ad_Description { ad_description1 = txtDescription.Text.Trim() };
                     context.Ad_Description.Add(newDescription);
-                    _editingAd.Ad_Description1 = newDescription;
+                    context.SaveChanges(); // Сохраняем для получения ID
                     _editingAd.ad_description = newDescription.ID;
                 }
 
@@ -380,25 +364,15 @@ namespace _122_Rogosin_UP02.Pages
                 {
                     var newPostDate = new Ad_post_date { ad_post_date1 = postDateString };
                     context.Ad_post_date.Add(newPostDate);
-                    _editingAd.Ad_post_date1 = newPostDate;
+                    context.SaveChanges(); // Сохраняем для получения ID
                     _editingAd.ad_post_date = newPostDate.ID;
                 }
 
-                // Обновление выбранных значений
-                _editingAd.Category = cmbCategory.SelectedItem as Category;
-                _editingAd.Ad_Type = cmbAdType.SelectedItem as Ad_Type;
-                _editingAd.Ad_Status = cmbAdStatus.SelectedItem as Ad_Status;
-                _editingAd.City = cmbCity.SelectedItem as City;
-                _editingAd.Users_Login = cmbUserLogin.SelectedItem as Users_Login;
-                _editingAd.Users_Password = cmbUserPassword.SelectedItem as Users_Password;
-
-                // Обновление ID
-                _editingAd.category_id = (_editingAd.Category?.ID) ?? _editingAd.category_id;
-                _editingAd.ad_type_id = (_editingAd.Ad_Type?.ID) ?? _editingAd.ad_type_id;
-                _editingAd.ad_status_id = (_editingAd.Ad_Status?.ID) ?? _editingAd.ad_status_id;
-                _editingAd.city_id = (_editingAd.City?.ID) ?? _editingAd.city_id;
-                _editingAd.user_login_id = (_editingAd.Users_Login?.ID) ?? _editingAd.user_login_id;
-                _editingAd.user_password_id = (_editingAd.Users_Password?.ID) ?? _editingAd.user_password_id;
+                // ОБНОВЛЕНИЕ ОСНОВНЫХ ПОЛЕЙ
+                _editingAd.category_id = selectedCategory.ID;
+                _editingAd.ad_type_id = selectedAdType.ID;
+                _editingAd.ad_status_id = selectedAdStatus.ID;
+                _editingAd.city_id = selectedCity.ID;
 
                 // Обновление цены
                 _editingAd.price = string.IsNullOrWhiteSpace(txtPrice.Text) ? null : (double?)double.Parse(txtPrice.Text);
@@ -406,11 +380,8 @@ namespace _122_Rogosin_UP02.Pages
                 context.SaveChanges();
 
                 ShowMessage("Объявление успешно обновлено!", false);
-
-                // Вызываем событие обновления объявления
                 AdUpdated?.Invoke(this, EventArgs.Empty);
 
-                // Возврат на предыдущую страницу
                 if (NavigationService.CanGoBack)
                 {
                     NavigationService.GoBack();
@@ -418,7 +389,13 @@ namespace _122_Rogosin_UP02.Pages
             }
             catch (Exception ex)
             {
-                ShowMessage($"Ошибка при обновлении: {ex.Message}", true);
+                string errorMessage = $"Ошибка при обновлении: {ex.Message}";
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $"\nВнутренняя ошибка: {ex.InnerException.Message}";
+                }
+                ShowMessage(errorMessage, true);
+                System.Diagnostics.Debug.WriteLine($"ОШИБКА ОБНОВЛЕНИЯ: {ex}");
             }
         }
 
