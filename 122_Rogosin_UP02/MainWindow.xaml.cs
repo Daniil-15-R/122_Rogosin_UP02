@@ -16,7 +16,7 @@ namespace _122_Rogosin_UP02
 
         private void InitializeApplication()
         {
-            MainFrame.Navigate(new Pages.AuthPage());
+            MainFrame.Navigate(new Pages.AdsPage());
 
             InitializeTimer();
 
